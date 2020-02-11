@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./lib/vue-2.6.11.js"></script>
+</head>
+
+<body>
+    <div id="app">
+
+        <div>
+            <label for="">Id:
+                <input type="text" v-model="id">
+            </label>
+
+            <label for="">Name:
+                <input type="text" v-model="name">
+            </label>
+
+            <input type="button" value="添加" @click="add">
+        </div>
+
+        <!-- 默认没有 key 时选中的是索引。 -->
+        <!-- 当 checkbox 选中时， unshift 在数组前面追加， checkbox 记住的是选中的索引 -->
+
+        <!-- <p v-for="(item, index) in items" :key="index"> -->
+
+        <!-- 设置 key 的值绑定对象的 id 。 item.id 或者直接绑定时， checkbox 记住的就是该对象的 id -->
+
+        <!-- 另外，使用 key 绑定时，列表的更新效率会更高，因为 vue 会检查 key 值，相同时不重新渲染，不同时才重新渲染 -->
+        <p v-for="(item, index) in items" :key="item.id">
+            <input type="checkbox" name="" id="">
+            {{ item.id }} --- {{item.name}} 
+        </p>
+    </div>
+    <script>
+        var vm = new Vue({
+            el: '#app',
+            data() {
+                return {
+                    id:'',
+                    name:'',
+                    items: [
+                        { id: 1, name: '小钰儿' },
+                        { id: 2, name: '多尔衮' },
+                        { id: 3, name: '大玉儿' },
+                        { id: 4, name: '顺治' },
+                    ]
+                }
+            },
+            methods: {
+                add(){
+                    //this.items.push({id : this.id, name: this.name})
+                    this.items.unshift({ id: this.id, name: this.name })
+                }
+            },
+        });
+    </script>
+</body>
+
+</html>

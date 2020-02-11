@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./lib/vue-2.6.11.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <!-- 从 1 开始 -->
+        <p v-for="item in 5" :key="index"> 这是第 {{item}} 次循环 </p> 
+    </div>
+    <script>
+        var vm = new Vue({
+            el: '#app',
+            data() {
+                return {
+                    items: []
+                }
+            },
+            methods: {
+
+            },
+        });
+    </script>
+</body>
+
+</html>
