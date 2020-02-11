@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        [v-cloak] {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <p>{{msg}}</p>
+        <!-- v-text、 v-html 和 插值表达式的区别 -->
+        <!-- 区别 1、默认 v-text、v-html 是没有闪烁问题 -->
+        <!-- 区别 2、v-text、 v-html 会覆盖元素中原本内容，插值表达式只会替换占位符 -->
+        <p v-text="msg">+++ ---</p>
+        <p>+++ {{msg}} ---</p>
+        <!-- 区别 3、 Html 文本需要渲染时要使用 v-html 绑定 -->
+        <p>{{msgHtml}}</p>
+        <p v-text="msgHtml"></p>
+        <p v-html="msgHtml"></p>
+
+        <!-- v-cloak 属性配合样式可以解决插值表达式的闪烁问题 -->
+        <p v-cloak>{{msg}}</p>
+
+        <!-- v-bind 绑定属性 简写 : -->
+        <input type="button" value="按钮" v-bind:title="mytitle">
+        <input type="button" v-bind:value="mytitle + 'Hello'">
+        <input type="button" :value="mytitle + ' 简写'">
+
+        <!-- v-on 绑定事件 简写 @ -->
+        <input type="button" value="显示信息" v-on:click="show">
+        <input type="button" value="显示信息" @click="showMsg">
+    </div>
+    <!-- 为了更明显的演示页面卡顿效果。可以进入如下 3 步 -->
+    <!-- 1、使用 Http 协议预览页面。可使用 node.js 环境或者 live server 插件等 -->
+    <!-- 2、将引入 vue 模块的操作移动到 dom 之后 -->
+    <!-- 3、在浏览器开发者模式中选择 network 选项卡，修改 offline 的值为 slow 3G -->
+    <script src="./lib/vue-2.6.11.js"></script>
+    <script>
+        new Vue({
+            el: '#app',
+            data() {
+                return {
+                    msg: 'v-clock 使用',
+                    msgHtml: '<h1>一级标题</h1>',
+                    mytitle: '自定义 Title'
+                }
+            },
+            methods: {
+                show: function () {
+                    alert('show');
+                },
+                showMsg() {
+                    alert('showMsg message');
+                }
+            },
+        })
+    </script>
+</body>
+
+</html>

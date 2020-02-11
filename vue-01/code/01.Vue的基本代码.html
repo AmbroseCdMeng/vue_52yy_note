@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <!-- 1、导入 Vue 包 -->
+    <script src="./lib/vue-2.6.11.js"></script>
+</head>
+
+<body>
+    <!-- MVVM 中的 V -->
+    <div id="app">
+        <p id="content">{{msg}}</p>
+    </div>
+    <script>
+        // 2、创建 Vue 实例
+        // 当导入包之后，浏览器内存中就多了一个 Vue 构造函数
+        // MVVM 中的 VM
+        var vm = new Vue({
+            el: '#app',//当前 Vue 实例需要控制的页面区域
+            // MVVM 中的 M
+            data: {
+                msg: 'Hello Vue',
+            }
+        })
+    </script>
+</body>
+
+</html>

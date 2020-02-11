@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./lib/vue-2.6.11.js"></script>
+    <style>
+        .inner {
+            height: 150px;
+            background-color: #CCC;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <div class="inner" @click="divHandler">
+            <!-- 默认按钮点击 - 冒泡 -->
+            <input type="button" value="默认冒泡" @click="btnHandler">
+            <!-- .stop 阻止冒泡 -->
+            <input type="button" value="阻止冒泡" @click.stop="btnHandler">
+
+        </div>
+
+        <div>
+            <!-- 默认超链接点击 -->
+            <a href="http://www.baidu.com" @click="btnHandler">跳转到百度</a>
+            <!-- .prevent 阻止默认行为 -->
+            <a href="http://www.baidu.com" @click.prevent="btnHandler">跳转到百度 阻止默认行为</a>
+            <!--  -->
+        </div>
+
+        <!-- .capture 捕获 -->
+        <div class="inner" @click.capture="divHandler">
+            <!-- 默认按钮点击 - 冒泡 -->
+            <input type="button" value="默认冒泡" @click="btnHandler">
+
+        </div>
+
+    </div>
+    <script>
+        var vm = new Vue({
+            el: '#app',
+            data() {
+                return {
+
+                }
+            },
+            methods: {
+                divHandler() {
+                    alert('触发 Inner div 点击事件')
+                    console.log('触发 Inner div 点击事件')
+                },
+                btnHandler() {
+                    alert('触发 button 点击事件')
+                    console.log('触发 button 点击事件');
+                }
+            },
+        });
+    </script>
+</body>
+
+</html>
+
+<!-- 1、 .stop 阻止事件冒泡。事件嵌套时由当前对象向外层冒泡。 -->
+<!-- 2、 .prevent 阻止事件默认行为， a 标签的默认跳转行为、 submit 的默认提交行为等 -->
+<!-- 3、 .capture 捕获机制。 事件嵌套时由修饰符所在事件向当前事件向捕获。体现为触发顺序与默认的冒泡默认相反 -->
