@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./lib/vue-2.6.11.js"></script>
+</head>
+
+<body>
+    <div id="app">
+
+        <input type="button" value="切换 flag" @click="flag = !flag">
+
+        <!-- v-if 每次都会重新删除或者创建 DOM 元素 -->
+        <h3 v-if="flag"> v-if 控制元素</h3>
+
+        <!-- v-show 不会重新删除或者创建 DOM 元素，只是切换元素的 display 属性 -->
+        <h3 v-show="flag"> v-show 控制元素</h3>
+
+        <!-- v-if 切换性能消耗较高 -->
+        <!-- v-show 初始渲染消耗较高 -->
+
+        <!-- 如果元素涉及到频繁的切换，建议使用 v-show -->
+        <!-- 如果元素显示的频率非常低，建议使用 v-if -->
+    </div>
+    <script>
+        var vm = new Vue({
+            el: '#app',
+            data() {
+                return {
+                    flag: true,
+                }
+            },
+            methods: {
+              
+            },
+        });
+    </script>
+</body>
+
+</html>
