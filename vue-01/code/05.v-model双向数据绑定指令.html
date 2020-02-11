@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./lib/vue-2.6.11.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <!-- v-bind 只能实现数据的单向绑定  从 M 到 V -->
+        <h4>{{ msg1 }}</h4>
+        <input type="text" :value="msg1" style="width: 100%;">
+
+        <br>
+
+        <!-- v-model 可以实现数据双向绑定   从 M 到 V 与 从 V 到 M -->
+        <!-- v-model 只能用在表单元素中 -->
+        <h4>{{ msg2 }}</h4>
+        <input type="text" v-model="msg2" style="width: 100%;">
+    </div>
+    <script>
+        var vm = new Vue({
+            el: '#app',
+            data() {
+                return {
+                    msg1: 'Hello v-bind',
+                    msg2: 'Hello v-model'
+                }
+            },
+            methods: {
+
+            },
+        });
+    </script>
+</body>
+
+</html>

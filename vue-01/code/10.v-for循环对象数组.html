@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./lib/vue-2.6.11.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <p v-for="(item, index) in items" :key="index">{{index}} --- {{item.nameEN}} -- {{item.nameCN}}</p>
+    </div>
+    <script>
+        var vm = new Vue({
+            el: '#app',
+            data() {
+                return {
+                    items: [
+                        { nameEN: 'GD', nameCN: '广东' },
+                        { nameEN: 'JX', nameCN: '江西' },
+                        { nameEN: 'JS', nameCN: '江苏' },
+                        { nameEN: 'GS', nameCN: '甘肃' },
+                        { nameEN: 'SX', nameCN: '陕西' },
+                    ]
+                }
+            },
+            methods: {
+
+            },
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./lib/vue-2.6.11.js"></script>
+
+    <style>
+        .red {
+            color: red;
+        }
+
+        .thin {
+            font-weight: 200;
+        }
+
+        .italic {
+            font-style: italic;
+        }
+
+        .active {
+            letter-spacing: 0.5em;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+
+        <!-- 方式一： 直接传递数组。 这里的 class 必须加引号 -->
+        <h1 :class="['red', 'thin']"> 这是一个 h1， class 绑定的第一种用法 </h1>
+
+        <!-- 方式二： 在数组中使用三元表达式 -->
+        <h1 :class="['thin', 'italic', flag ? '' : 'active']">这是一个 h1， class 绑定的第二种用法</h1>
+
+        <!-- 方式三： 在数组中使用对象替代三元表达式 -->
+        <h1 :class="['thin', 'italic', {'active' : flag}]">这是一个 h1， class 绑定的第三种用法</h1>
+
+        <!-- 方式四： 直接使用对象进行绑定。对象的属性可以不带引号 -->
+        <h1 :class="{red:true, thin:true, italic:false, active:true}">这是一个 h1， class 绑定的第四种用法</h1>
+        <h1 :class="clsObj">这是一个 h1， class 绑定的第二种用法</h1>
+        
+
+    </div>
+    <script>
+        var vm = new Vue({
+            el: '#app',
+            data() {
+                return {
+                    flag: false,
+                    clsObj: { red: true, thin: true, italic: false, active: true }
+                }
+            },
+            methods: {
+
+            },
+        });
+    </script>
+</body>
+
+</html>

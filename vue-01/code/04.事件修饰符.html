@@ -11,6 +11,12 @@
             height: 150px;
             background-color: #CCC;
         }
+
+        .outer {
+            height: 150px;
+            padding: 30px;
+            background-color: red;
+        }
     </style>
 </head>
 
@@ -39,6 +45,26 @@
 
         </div>
 
+        <div class="inner" @click="divHandler">
+            <!-- .self 只有点击自身时候才触发 -->
+            <input type="button" value="点击自身时才触发" @click.self="btnHandler">
+        </div>
+
+        <div class="inner" @click="divHandler">
+            <!-- .once 只触发一次 -->
+            <input type="button" value="只触发一次" @click.once="btnHandler">
+            <input type="button" value="时间修饰符串联" @click.self.once="btnHandler">
+        </div>
+
+
+        <!-- .stop 和 .self 的区别 -->
+        <div class="outer" @click="divOuterHandler">
+            <!-- <div class="inner" @click.stopself="divHandler"> -->
+            <div class="inner" @click.self="divHandler"></div>
+            <input type="button" value="点击这里" @click="btnHandler">
+        </div>
+    </div>
+
     </div>
     <script>
         var vm = new Vue({
@@ -56,6 +82,10 @@
                 btnHandler() {
                     alert('触发 button 点击事件')
                     console.log('触发 button 点击事件');
+                },
+                divOuterHandler() {
+                    alert('触发 Outer div 点击事件')
+                    console.log('触发 Outer div  点击事件');
                 }
             },
         });
@@ -67,3 +97,9 @@
 <!-- 1、 .stop 阻止事件冒泡。事件嵌套时由当前对象向外层冒泡。 -->
 <!-- 2、 .prevent 阻止事件默认行为， a 标签的默认跳转行为、 submit 的默认提交行为等 -->
 <!-- 3、 .capture 捕获机制。 事件嵌套时由修饰符所在事件向当前事件向捕获。体现为触发顺序与默认的冒泡默认相反 -->
+<!-- 4、 .self 只有点击自身时才触发。捕获、冒泡均不生效 -->
+<!-- 5、 .once 只触发一次。 -->
+
+<!-- .stop 和 .self 的区别 -->
+<!-- 1、.stop 会终止冒泡行为 -->
+<!-- 2、.self 只会跳过自己的事件行为，会继续其他的冒泡 -->
