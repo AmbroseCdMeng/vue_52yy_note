@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./lib/vue-2.6.11.js"></script>
+    <link rel="stylesheet" href="./lib/bootstrap-3.3.7.css">
+</head>
+
+<body>
+    <div id="app">
+
+
+
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title">添加</h3>
+            </div>
+            <div class="panel-body form-inline">
+                <label for="">
+                    ID:
+                    <input type="text" class="form-control" v-model="id">
+                </label>
+                <label for="">
+                    Name:
+                    <input type="text" class="form-control" v-model="name" @keyup.f2="add()">
+                    <!-- <input type="text" class="form-control" v-model="name" @keyup.enter="add()"> -->
+                </label>
+                <label for="">
+                    <input type="button" class="btn btn-primary" value="添加" @click="add()">
+                </label>
+
+                <label for="">
+                    搜索名称关键字:
+                    <input type="text" class="form-control" v-model="keywords">
+                </label>
+            </div>
+        </div>
+
+
+
+        <table class="table table-bordered table-hover table-striped">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Time</th>
+                    <th>Operation</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="(item, index) in search(keywords)" :key="item.id">
+                    <td>{{ item.id }}</td>
+                    <td>{{ item.Name }}</td>
+                    <td>{{ item.Time }}</td>
+                    <td>
+                        <a href="" @click.prevent="del(item.id)">删除</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
+    <script>
+        //自定义全局按键修饰符
+        Vue.config.keyCodes.f2 = 113;
+
+        var vm = new Vue({
+            el: '#app',
+            data() {
+                return {
+                    id: '',
+                    name: '',
+                    keywords: '',
+                    list: [
+                        { id: 1, Name: '广东省', Time: new Date() },
+                        { id: 2, Name: '江西省', Time: new Date() },
+                        { id: 3, Name: '河南省', Time: new Date() },
+                        { id: 4, Name: '陕西省', Time: new Date() },
+                        { id: 5, Name: '甘肃省', Time: new Date() },
+                    ]
+                }
+            },
+            methods: {
+                add() {
+                    if (!this.id || !this.name) return
+                    this.list.push(
+                        { id: this.id, Name: this.name, Time: new Date }
+                    );
+                    this.id = this.name = '';
+                },
+                del(id) {
+                    this.list.splice(
+                        this.list.findIndex(item => {
+                            if (item.id === id) {
+                                return true;
+                            }
+                        }
+                        ), 1);
+                },
+                search(keywords) {
+                    return this.list.filter(item => {
+                        if (item.Name.includes(keywords))
+                            return item;
+                    })
+                }
+            },
+        });
+    </script>
+</body>
+
+</html>
