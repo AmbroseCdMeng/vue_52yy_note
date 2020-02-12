@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./lib/vue-2.6.11.js"></script>
+    <script src="./lib/vue-resource-1.5.1.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <input type="button" value="发送 get 请求" @click="getInfo">
+        <input type="button" value="发送 post 请求" @click="postInfo">
+        <input type="button" value="发送 jsonp 请求" @click="jsonpInfo">
+    </div>
+    <script>
+        var vm = new Vue({
+            el: '#app',
+            data() {
+                return {
+
+                }
+            },
+            methods: {
+                getInfo() {
+                    let url = 'http://vue.studyit.io/api/getlunbo';
+                    /* 全局 get 请求 */
+                    // Vue.http.get(url, [options]).then(successCallback, errorCallback)
+                    /* 局部 get 请求 */
+                    // this.$http.get(url, [options]).then(successCallback, errorCallback)
+                    this.$http.get(url, {}).then(result => {
+                        console.log(result.status)
+                        if (result.status === 200)
+                            console.log(result.body)
+                    }, err => {
+                        console.log(err)
+                    })
+                },
+
+                postInfo() {
+                    let url = 'http://vue.studyit.io/api/post';
+                    /* 局部 post 请求 */
+                    // this.$http.post(url, [body], [options]).then(successCallback, errorCallback)
+                    this.$http.post(url, {}, {
+                        /* send request body as application/x-www-form-urlencoded content type */
+                        emulateJSON: true,
+                    }).then(result => {
+
+                    }, err => {
+
+                    })
+                },
+
+                /**
+                 * JSONP 的实现原理
+                 *  - 由于浏览器的安全性限制，不允许 AJAX 访问协议不同、域名不同、端口不同的数据接口， 浏览器认为这种访问不安全；
+                 *  - 可以通过动态创建 script 标签的形式， 把 script 标签的 src 属性， 指向数据接口的地址， 因为 script 标签不存在跨域限制，这种数据获取方式， 称作 JSONP
+                 *  - JSONP 目前只支持 Get 请求
+                 * 
+                 *  - 具体实现过程
+                 *      + 先在客户端定义一个回调方法，预定义对数据的操作；
+                 *      + 再把这个回调方法的名称， 通过 URL 传参的形式， 提交到服务器的数据接口；
+                 *      + 服务器数据接口组织好要发送给客户端的数据， 再拿着客户端传递回来的回调方法名称， 拼接出一个调用这个方法的字符串， 发送给客户端去解析执行
+                 *      + 客户端拿到服务器返回的字符串之后， 当作 script 脚本去解析执行， 这样就能够拿到 JSONP 的数据了
+                 */
+                jsonpInfo() {
+                    let url = 'http://vue.studyit.io/api/jsonp';
+                    /* 局部 post 请求 */
+                    // this.$http.jsonp(url, [options]).then(successCallback, errorCallback)
+                    this.$http.jsonp(url, {}).then(result => {
+                        console.log(result.body)
+                    }, err => {
+
+                    })
+                }
+            },
+        });
+    </script>
+</body>
+
+</html>
