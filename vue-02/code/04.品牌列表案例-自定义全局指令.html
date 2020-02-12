@@ -25,7 +25,7 @@
                 </label>
                 <label for="">
                     Name:
-                    <input type="text" class="form-control" v-model="name" @keyup.enter="add()">
+                    <input type="text" class="form-control" v-model="name" @keyup.enter="add()" >
                 </label>
                 <label for="">
                     <input type="button" class="btn btn-primary" value="添加" @click="add()">
@@ -34,7 +34,8 @@
                 <label for="">
                     搜索名称关键字:
                     <!-- 自定义全局指令（以 v- 开头） v-focus -->
-                    <input type="text" class="form-control" v-model="keywords" id="search" v-focus>
+                    <!-- 字符串值要带引号 -->
+                    <input type="text" class="form-control" v-model="keywords" id="search" v-focus v-color="'red'">
                 </label>
             </div>
         </div>
@@ -53,7 +54,7 @@
             <tbody>
                 <tr v-for="(item, index) in search(keywords)" :key="item.id">
                     <td>{{ item.id }}</td>
-                    <td>{{ item.Name }}</td>
+                    <td v-fontweight="900" v-color="'green'">{{ item.Name }}</td>
                     <td>{{ item.Time }}</td>
                     <td>
                         <a href="" @click.prevent="del(item.id)">删除</a>
@@ -71,13 +72,24 @@
         Vue.directive('focus', {
             //当指令绑定在元素上时，会立即执行，只执行一次
             //第一个参数永远是 el，表示绑定的元素，是一个原生的 JS 对象
+            //（只读）第二个参数是 binding 对象。 包含：  
+            //      name 指令名 
+            //      value 绑定值
+            //      oldValue 绑定前的值
+            //      expression 绑定值的字符串形式
+            //      arg 传给指定的参数
+            //      modifiers 一个包含修饰符的对象
+            //（只读）第三个参数是 vnode。 Vue 编译生成的虚拟节点
+            //（只读）第四个参数是 oldVnode。 上一个虚拟节点
             bind: function (el) {
                 //在 bind 阶段，刚绑定指令，还没有插入到 DOM 中，此时，调用 focus 方法没有作用
+                //css 相关操作建议放在 bind 中
                 //el.focus();
             },
 
             //元素插入到 DOM 中时，会立即执行，只执行一次
             inserted: function (el) {
+                //JS 相关操作建议放在 inserted 中
                 el.focus();
             },
 
@@ -86,6 +98,17 @@
 
             },
         })
+
+
+        //自定义全局指令
+        Vue.directive('color', {
+            bind:function(el, binding){
+                console.log(binding.value);
+                console.log(binding.expression);
+                el.style.color = binding.value;
+            }
+        })
+
 
         var vm = new Vue({
             el: '#app',
@@ -127,6 +150,26 @@
                     })
                 }
             },
+
+            /* 自定义私有指令 */
+            directives:{
+
+                // 'fontweight':{
+                //     bind:function(el, binding){
+                //         el.style.fontWeight = binding.value;
+                //     },
+                //     updated:function(el, binding){
+                //         el.style.fontWeight = binding.value;
+                //     },
+                //     inserted:function(){
+
+                //     }
+                // },
+                /* 默认会绑定到 bind 和 updated 钩子函数上。这种写法是上面写法的简写形式 */
+                'fontweight': function(el, binding){
+                    el.style.fontWeight = binding.value;
+                }
+            }
         });
     </script>
 </body>
