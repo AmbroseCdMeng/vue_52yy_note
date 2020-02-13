@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./lib/vue-2.6.11.js"></script>
+</head>
+
+<body>
+    <div id="app">
+
+        <a href="http://" @click.prevent="active='login'">登录</a>
+        <a href="http://" @click.prevent="active='register">注册</a>
+
+       <!-- Vue 提供了对应的 component 元素来显示对应名称的组件 -->
+       <!-- component 是一个占位符 :is 属性， 指定要展示的组件名称 -->
+        <component :is="active"></component>
+
+    </div>
+    <script>
+
+        /* 定义全局组件一 */
+        Vue.component('login', {
+            template: '<h3>登录组件</h3>'
+        })
+
+        /* 定义全局组件二 */
+        Vue.component('register', {
+            template: '<h3>登录组件</h3>'
+        })
+
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                active: 'login',
+            },
+            methods: {},
+            filters: {},
+            directives: {},
+            components: {},
+
+            /* 钩子函数 */
+            beforeCreate() { },
+            created() { },
+            beforeMount() { },
+            mounted() { },
+            beforeUpdate() { },
+            updated() { },
+            beforeDestroy() { },
+            destroyed() { },
+        });
+    </script>
+</body>
+
+</html>

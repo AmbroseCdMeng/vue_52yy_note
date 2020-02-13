@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./lib/vue-2.6.11.js"></script>
+
+    <style>
+        .v-enter,
+        .v-leave-to {
+            opacity: 0;
+            transform: translateX(150px);
+        }
+
+        .v-enter-active,
+        .v-leave-active {
+            transition: all 0.6s ease;
+        }
+
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <!-- 多个组件的过渡。不需要使用 key 特性。相反，只需要使用动态组件 -->
+
+        <a href="http://" @click.prevent="active='login'">登录</a>
+        <a href="http://" @click.prevent="active='register'">注册</a>
+
+        <!-- 通过 mode 属性设置组件切换模式 -->
+        <transition mode="out-in">
+            <component :is="active"></component>>
+        </transition>
+    </div>
+
+    <template id="login">
+        <h3>登录组件</h3>
+    </template>
+
+    <template id="register">
+        <h3>注册组件</h3>
+    </template>
+    <script>
+        /* 自定义组件一 */
+        Vue.component('login', {
+            template: '#login',
+        })
+
+
+        /* 自定义组件二 */
+        Vue.component('register', {
+            template: '#register',
+        })
+
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                active: 'login'
+            },
+            methods: {},
+            filters: {},
+            directives: {},
+            components: {},
+
+            /* 钩子函数 */
+            beforeCreate() { },
+            created() { },
+            beforeMount() { },
+            mounted() { },
+            beforeUpdate() { },
+            updated() { },
+            beforeDestroy() { },
+            destroyed() { },
+        });
+    </script>
+</body>
+
+</html>
