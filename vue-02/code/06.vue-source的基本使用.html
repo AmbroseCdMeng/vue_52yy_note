@@ -16,6 +16,14 @@
         <input type="button" value="发送 jsonp 请求" @click="jsonpInfo">
     </div>
     <script>
+        //  vue-resource 全局配置
+        // 如果通过全部配置，请求数据接口根域名
+        // 则在每次单独发起 http 请求时，请求的 url 路径，应该以相对路径开头，前面不能带 /
+        // 否则，不会启用根路径拼接
+        Vue.http.options.root = 'http://vue.studyit.io';
+
+        Vue.http.options.emulateJSON = true;
+
         var vm = new Vue({
             el: '#app',
             data() {
@@ -25,7 +33,8 @@
             },
             methods: {
                 getInfo() {
-                    let url = 'http://vue.studyit.io/api/getlunbo';
+                    //let url = 'http://vue.studyit.io/api/getlunbo';
+                    let url = 'api/getlunbo';
                     /* 全局 get 请求 */
                     // Vue.http.get(url, [options]).then(successCallback, errorCallback)
                     /* 局部 get 请求 */
@@ -45,7 +54,7 @@
                     // this.$http.post(url, [body], [options]).then(successCallback, errorCallback)
                     this.$http.post(url, {}, {
                         /* send request body as application/x-www-form-urlencoded content type */
-                        emulateJSON: true,
+                        emulateJSON: true,/* 这个也可以全局配置 */
                     }).then(result => {
 
                     }, err => {
