@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./lib/vue-2.6.11.js"></script>
+
+    <style>
+        .ball {
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            background-color: red;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <input type="button" value="加入购物车" @click="flag = !flag">
+
+        <!-- 
+            <transition
+                v-on:before-enter="beforeEnter"
+                v-on:enter="enter"
+                v-on:after-enter="afterEnter"
+                v-on:enter-cancelled="enterCancelled"
+
+                v-on:before-leave="beforeLeave"
+                v-on:leave="leave"
+                v-on:after-leave="afterLeave"
+                v-on:leave-cancelled="leaveCancelled" >
+            </transition> 
+        -->
+
+        <transition @before-enter="beforEnter" @enter="enter" @after-enter="afterEnter">
+            <div class="ball" v-show="flag"></div>
+        </transition>
+    </div>
+    <script>
+        var vm = new Vue({
+            el: '#app',
+            data() {
+                return {
+                    flag: false
+                }
+            },
+            methods: {
+                /**
+                 *  动画钩子函数
+                 *      - 第一个参数 el 表示要执行动画的元素，是一个原生 JS 对象 
+                 *      - 第二个参数 done 是 afterEnter 函数的引用。该参数只用在 enter 和 leave 中
+                 * */
+                beforEnter(el) {
+                    /* 动画入场之前，此时动画尚未开始。可以在此设置元素开始动画以前的样式 */
+
+                    //设置元素开始动画前起始位置
+                    el.style.transform = 'translate(0, 0)';
+                },
+                enter(el, done) {
+                    /* 动画开始之后的样式。可以在此设置元素完成动画之后的结束状态 */
+
+                    //任意一个即可，强制动画刷新
+                    el.offsetWidth; //el.offsetHeight; el.offsetLeft; el.offsetTop;
+
+                    //设置元素动画结束的状态，以及动画过渡时长、行为
+                    el.style.transform = "translate(150px, 450px)";
+                    el.style.transition = 'all 1000ms ease';
+
+                    /* 一般该函数的调用是必须的，否则会出现延迟效果 */
+                    done();// 在动画执行完后立即调用 done 函数，即 afterEnter 函数。否则会有一段时间延迟
+                },
+                afterEnter(el) {
+                    this.flag = !this.flag;//动画执行完后会有一段时间等待，然后隐藏
+                },
+            },
+        });
+    </script>
+</body>
+
+</html>

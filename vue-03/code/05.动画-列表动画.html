@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./lib/vue-2.6.11.js"></script>
+
+    <style>
+        li {
+            border: 1px dashed #999;
+            margin: 5px;
+            line-height: 33px;
+            padding-left: 5px;
+            font-size: 12px;
+            width: 100%;
+        }
+
+        li:hover {
+            background-color: hotpink;
+            transition: all 0.4s ease;
+        }
+
+        /* 动画 */
+        .v-enter,
+        .v-leave-to {
+            opacity: 0;
+            transform: translateY(80px);
+        }
+
+        .v-enter-active,
+        .v-leave-active {
+            transition: all 0.6s ease;
+        }
+
+        /* 元素位移时的样式 */
+        /* v-move 需要搭配 v-leave-active 的 position: absolute 使用。一般是固定写法 */
+        /* position: absolute 时，宽度默认最小，建议对 li 加上 width: 100% */
+        .v-move {
+            transition: all 0.6s ease;
+        }
+
+        .v-leave-active {
+            position: absolute;
+        }
+    </style>
+
+</head>
+
+<body>
+    <div id="app">
+
+        <div>
+
+            <label for="input-id" class="col-sm-2">
+                ID:
+                <input type="text" v-model="id">
+            </label>
+
+            <label for="input-id" class="col-sm-2">
+                Name:
+                <input type="text" v-model="name">
+            </label>
+
+            <input type="button" value="添加" @click="add">
+
+        </div>
+
+        <!-- <ul> -->
+            <!-- 在实现列表过渡的时候，如果需要过渡的元素是 v-for 渲染的，需要使用 transition-group -->
+
+            <!-- 如果要为 v-for 循环渲染的元素设置动画，必须为每一个元素设置 key 属性 -->
+            <!-- appear 入场效果 -->
+
+            <!-- transition-group 默认渲染为一个 span 标签。这不符合语法规范。 ul -> span -> li -->
+            <!-- 所以可以删掉 ul 标签，在 transition-group 标签中加入 tag='ul' 属性，让 transition-group 渲染为 ul 标签。 ul -> li -->
+            <transition-group appear tag="ul">
+
+                <li v-for="(item, index) in list" :key="item.id" @click="del(index)">
+                    {{ item.id }} -- {{ item.name }}
+                </li>
+
+            </transition-group>
+
+        <!-- </ul> -->
+
+    </div>
+    <script>
+        var vm = new Vue({
+            el: '#app',
+            data() {
+                return {
+                    id: '',
+                    name: '',
+                    list: [
+                        { id: 1, name: '草莓' },
+                        { id: 2, name: '黄瓜' },
+                        { id: 3, name: '榴莲' },
+                        { id: 4, name: '柚子' },
+                        { id: 5, name: '橘子' },
+                    ]
+                }
+            },
+            methods: {
+                add() {
+                    this.list.push({
+                        id: this.id,
+                        name: this.name
+                    });
+                    this.id = this.name = '';
+                },
+                del(i) {
+                    this.list.splice(i, 1)
+                }
+            },
+        });
+    </script>
+</body>
+
+</html>
