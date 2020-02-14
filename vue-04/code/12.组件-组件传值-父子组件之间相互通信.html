@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./lib/vue-2.6.11.js"></script>
+    <style>
+        .son {
+            background-color: aqua;
+        }
+
+        .parent{
+            background-color: yellow;
+        }
+    </style>
+</head>
+
+<body>
+    <h2>蓝色的是子组件</h2>
+    <h2>黄色的是父组件</h2>
+
+    <br>
+    <!-- 父组件 -->
+    <div id="app" class="parent">
+
+        <!-- 自定义绑定属性向子组件传值 -->
+        <!-- 自定义绑定方法向父组件传值 -->
+        <comp-son :parentmsg="parentMsg" @getmsg="getMsgFromSon"></comp-son>
+
+        <h3>父组件从子组件获取到的数据 --- {{ msgFromSon }}</h3>
+
+    </div>
+
+
+    <!-- 子组件 -->
+    <template id="compSon">
+        <div class="son">
+
+            <h3>子组件从父组件获取到的数据 --- {{ parentmsg }}</h3>
+
+            <br>
+
+            <input type="button" value="子组件向父组件传值" @click="sendMsg">
+
+        </div>
+    </template>
+    <script>
+
+        var compSon = {
+            template: '#compSon',
+            data() {
+                return {
+                    sonMsg: '这是【子】组件的信息'
+                }
+            },
+            /* 子组件 -- props 声明自定义绑定名称 从父组件接收值 */
+            props: ['parentmsg'],
+            methods: {
+                sendMsg() {
+                    // 调用自定义绑定方法向父组件传值
+                    this.$emit('getmsg', this.sonMsg);
+                }
+            }
+        }
+
+
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                parentMsg: '这是【父】组件的信息',
+                msgFromSon: ''
+            },
+            methods: {
+                /* 父组件 -- 定义方法从子组件接收值 */
+                getMsgFromSon(data) {
+                    this.msgFromSon = data;
+                    console.log(this.msgFromSon);
+                }
+            },
+            components: {
+                compSon
+            },
+        });
+    </script>
+</body>
+
+</html>
