@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./lib/vue-2.6.11.js"></script>
+    <script src="./lib/vue-router-3.1.5.js"></script>
+</head>
+
+<body>
+    <div id="app">
+
+        <router-link to="/login">登录</router-link>
+        <router-link to="/register">注册</router-link>
+
+        <br>
+
+        <!-- 路由传参 -- 方式一 -- 查询字符串 -->
+        <!-- 如果在路由中， 使用查询字符串给路由传参，则不需要修改路由规则的 path 属性 -->
+        <router-link to="/login?id=10&name=MCD">登录【传参 id=10 & name=MCD】</router-link>
+
+        <!-- 路由传参 -- 方式二 -- 占位符传参 -->
+        <!-- 因为是通过修改路由匹配规则占位符传参，所以如果参数没有传够，是无法匹配到路由规则的。如下： -->
+        <!-- <router-link to="/register/52">注册</router-link> -->
+        <router-link to="/register/52/YY">注册</router-link>
+
+        <router-view></router-view>
+    </div>
+    <script>
+
+        var login = {
+            template: '<h1>登录组件 --- {{ $route.query.id }} --- {{ $route.query.name }}</h1>',
+            // 组件的声明周期
+            created() {
+                /* 获取 URL 查询字符串传参结果 */
+                // 原理：通过 $route.query 属性存储参数内容
+                console.log(this.$route);
+                console.log(this.$route.query.id);
+
+
+            }
+        };
+        var register = {
+            template: '<h1>注册组件 --- {{ $route.params.id }} --- {{ $route.params.name }}</h1>',
+            created() {
+                /* 获取 占位符 传参结果 */
+                // 原理： 通过 $route.matched 中的占位符与自动生成的正则表达式对内容进行解析，将解析结果存储到 param 中
+                console.log(this.$route);
+                console.log(this.$route.params.id);
+            }
+        };
+
+        var router = new VueRouter({
+            routes: [
+                { path: '/', redirect: '/login' },
+
+                /* URL 查询字符串传参， path 不需要任何修改 */
+                { path: '/login', component: login },
+
+                /* 占位符传参， path 需要使用 :变量名 进行占位 */
+                { path: '/register/:id/:name', component: register },
+            ]
+        })
+
+        var vm = new Vue({
+            el: '#app',
+            data: {},
+            methods: {},
+            filters: {},
+            directives: {},
+            components: {},
+            router,
+
+            /* 钩子函数 */
+            beforeCreate() { },
+            created() { },
+            beforeMount() { },
+            mounted() { },
+            beforeUpdate() { },
+            updated() { },
+            beforeDestroy() { },
+            destroyed() { },
+        });
+    </script>
+</body>
+
+</html>

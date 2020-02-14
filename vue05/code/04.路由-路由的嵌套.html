@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./lib/vue-2.6.11.js"></script>
+    <script src="./lib/vue-router-3.1.5.js"></script>
+</head>
+
+<body>
+    <div id="app">
+
+        <router-link to="/account">跳转到 Account 组件</router-link>
+
+        <router-view></router-view>
+        
+    </div>
+
+
+    <!-- 定义组件 -->
+    <template id="tmp1">
+        <div>
+            <h1> Account 组件</h1>
+            <router-link to="login">登录</router-link>
+            <router-link to="register">注册</router-link>
+
+            <router-view></router-view>
+        </div>
+    </template>
+    <script>
+
+        var account = {
+            template: '#tmp1'
+        };
+        var login = {
+            template: '<h1>登录组件</h1>'
+        };
+        var register = {
+            template: '<h1>注册组件</h1>'
+        };
+
+        const router = new VueRouter({
+            routes: [
+                { path: '/', redirect: '/account' },
+                { 
+                    path: '/account', 
+                    component: account ,
+                    /* 子路由的 path 前不建议带 / 否则永远以根路径开始请求，不方便用户理解 */
+                    children:[
+                        {
+                            path:'',
+                            redirect: 'login'
+                        },
+                        {
+                            path:'login',
+                            component:login
+                        },
+                        {
+                            path:'register',
+                            component:register
+                        }
+                    ]
+                }
+            ]
+        })
+
+        var vm = new Vue({
+            el: '#app',
+            data: {},
+            methods: {},
+            filters: {},
+            directives: {},
+            components: {},
+            router,
+
+            /* 钩子函数 */
+            beforeCreate() { },
+            created() { },
+            beforeMount() { },
+            mounted() { },
+            beforeUpdate() { },
+            updated() { },
+            beforeDestroy() { },
+            destroyed() { },
+        });
+    </script>
+</body>
+
+</html>

@@ -9,12 +9,22 @@
     <script src="./lib/vue-router-3.1.5.js"></script>
 
     <style>
-        /* 路由选中样式 */
         .router-link-active,
         .my-route-active {
             color: red;
             font-weight: 800;
             font-style: italic;
+        }
+
+        .v-enter,
+        .v-leave-to {
+            opacity: 0;
+            transform: translate(140px);
+        }
+
+        .v-enter-active,
+        .v-leave-active {
+            transition: all 0.5s ease;
         }
     </style>
 </head>
@@ -22,47 +32,41 @@
 <body>
     <div id="app">
 
-        <!-- hash 前台路由 -->
-        <!-- <a href="#/login">登录</a>
-        <a href="#/register">注册</a> -->
-
-        <!-- router-link 默认渲染为 a 标签，也可以通过 tag 指定渲染 -->
         <router-link to="/login">router-link 登录</router-link>
         <router-link to="/register" tag="span">router-link 注册</router-link>
 
-        <!-- 3、创建路由容器 -->
-        <router-view></router-view>
+        <!-- transiation -->
+        <transition mode="out-in">
+            <router-view></router-view>
+        </transition>
+
     </div>
     <script>
 
-        /* 创建一个登录组件 */
         var login = {
             template: '<h1>登录组件</h1>'
         };
-        /* 创建一个注册组件 */
         var register = {
             template: '<h1>注册组件</h1>'
         };
 
 
-        /* 1、创建路由对象 */
         var routerObj = new VueRouter({
-            // route        //路由匹配规则
-            routes: [        //多个路由匹配规则
+            routes: [
                 {
                     path: '/',
-                    redirect: '/login', //重定向
+                    redirect: '/login',
                 },
                 {
-                    path: '/login',    //监听的链接地址
-                    component: login        //展示的对应组件模板对象【必须是组件模板对象，不能使组件引用名称】
+                    path: '/login',
+                    component: login
                 },
                 {
                     path: '/register',
                     component: register
                 }
             ],
-            linkActiveClass: 'my-route-active'// 路由默认选中的样式。默认值 router-link-active
+            linkActiveClass: 'my-route-active'
         })
 
         var vm = new Vue({
@@ -72,7 +76,7 @@
             filters: {},
             directives: {},
             components: {},
-            /* 2、将路由规则对象，注册到 vm 实例上，用来监听 URL 的变化，然后展示对应的组件 */
+
             router: routerObj,
 
             /* 钩子函数 */
