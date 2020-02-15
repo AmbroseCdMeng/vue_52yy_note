@@ -73,14 +73,14 @@
 ### 前端路由的特点
 
 - 同页面的锚点跳转
-  - # 代表网页中的位置，其右边的字符就是位置的标识符。
-    - step1: 设置一个锚点 <a href='#print'>定位到 print 位置</a>
-    - step2: 在页面需要定位的内容加上 id 。如 <div id='print'></div>
+    - 代表网页中的位置，其右边的字符就是位置的标识符。
+    - step1: 设置一个锚点 `<a href='#print'> 定位到 print 位置</a>`
+    - step2: 在页面需要定位的内容加上 id 。如 `<div id='print'></div>`
 
 - 不发送 HTTP 请求
-  - 比如访问 http://www.baidu.com#key
-    - 浏览器实际的请求是 http://www.baidu.com
-    - 即使是从 http://www.baidu.com#key 页面跳转到 http://www.baidu.com#value 请求也只有 http://www.baidu.com 不会有 # 之后的部分
+  - 比如访问 `http://www.baidu.com#key`
+    - 浏览器实际的请求是 `http://www.baidu.com`
+    - 即使是从 `http://www.baidu.com#key` 页面跳转到 `http://www.baidu.com#value` 请求也只有 `http://www.baidu.com` 不会有 # 之后的部分
 
 - 浏览器历史记录
   - 每次 # 改变，都会在浏览器历史记录中增加一条数据，方便使用【后退】和【前进】操作。
@@ -104,6 +104,14 @@
 ### 前端路由的坑
 
 - 十六进制颜色
-  - 前端路由会忽略 URL 中 # 后面的部分。如果 URL 想指定一个十六进制的颜色作为参数。如 http://www.baidu.com/?color=#FFF
-    - 此时，浏览器实际发出的只是 http://www.baidu.com/?color= 而忽略了 # 之后的部分
-    - 这种情况下，应该将 # 转码为 %23 也就是说，应该发送 http://www.baidu.com/?color=%23FFF
+  - 前端路由会忽略 URL 中 # 后面的部分。如果 URL 想指定一个十六进制的颜色作为参数。如 `http://www.baidu.com/?color=#FFF`
+    - 此时，浏览器实际发出的只是 `http://www.baidu.com/?color=` 而忽略了 # 之后的部分
+    - 这种情况下，应该将 # 转码为 %23 也就是说，应该发送 `http://www.baidu.com/?color=%23FFF`
+
+### `nrm` 的安装使用
+
+  - `npm i -g nrm`  全局安装
+  - `nrm ls` 查看镜像列表
+  - `nrm use npm` 切换不同的镜像地址
+
+  > nrm 只是单纯的提供几个常用的 url 地址，方便切换，但每次安装包的工具依然是 npm。不支持 node v8.0 及以下
