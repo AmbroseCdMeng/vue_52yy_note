@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./lib/vue-2.6.11.js"></script>
+</head>
+
+<body>
+    <div id="app">
+
+        <input type="text" v-model="firstname"> +
+        <input type="text" v-model="lastname"> =
+        <input type="text" v-model="fullname">
+
+
+        {{ fullname }}
+        {{ fullname }}
+
+    </div>
+    <script>
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                firstname: '',
+                lastname: '',
+            },
+            /* 计算属性 */
+            computed: {
+                //1、计算属性的本质就是一个 method 只不过使用时是将其作为属性来使用
+                //2、只要其中所用到的 data 中的数据发生了变化，就会立即重新计算
+                //3、计算属性的结果会被缓存，方便下次调用。其所依赖的数据没发生变化时，不会对其进行重新计算
+                'fullname':function(){
+                    console.log('fullname 依赖的值发生改变了')
+                    return this.firstname + this.lastname;
+                }
+            },
+        })
+    </script>
+</body>
+
+</html>
