@@ -115,3 +115,34 @@
   - `nrm use npm` 切换不同的镜像地址
 
   > nrm 只是单纯的提供几个常用的 url 地址，方便切换，但每次安装包的工具依然是 npm。不支持 node v8.0 及以下
+
+
+### 模块的导入和导出
+
+- ES 6
+  - 导入模块
+    - `import 模块名称 from '模块标识符'`
+    - `import '标识路径'`
+  - 导出模块
+    - `export default {}`   
+      - import 自定义模块名称 from 模块名
+      - 一个模块中只允许一次
+    - `export var 变量名 = 变量内容`
+      - import {变量名} from 模块名
+      - import {变量名1 as 自定义名称, 变量名2} from 模块名
+      - 一个模块中允许有多个
+- Node
+  - 导入模块
+    - `const 名称 = require('模块标识符')`
+  - 导出模块
+    - `module.exports = {}`
+    - `exports`
+
+### 建议组合
+
+- Mint-UI
+  - 基于 Vue.js 的移动端组件库
+
+- MUI
+  - 配套代码片段。类似于 BootStrap ，任何项目都可以使用。
+    - 不能使用 npm 下载
