@@ -10,6 +10,7 @@ function getFileByPath(fpath) {
 }
 
 
+
 /**
  * 需求：先读取 文件 1.txt  成功后读取文件 2.txt  成功后读取文件 3.txt
  *
